@@ -2,6 +2,7 @@ package linustracker;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Calendar;
 import java.sql.*;
 import java.time.LocalDate;
@@ -9,11 +10,13 @@ import java.util.logging.*;
 import javax.swing.JOptionPane;
 
 public class halamanAdmin extends javax.swing.JFrame {
+    static String countLinus;
     public halamanAdmin() {
         initComponents();
         hideFields();
         jam();
         
+        countLinusToday();
         showListBusAccount();
     }
     
@@ -41,6 +44,25 @@ public class halamanAdmin extends javax.swing.JFrame {
         inputUsername.setVisible(true);
         buttonTambah.setVisible(false);
         buttonHapus.setVisible(true);
+    }
+    
+    public void countLinusToday() {
+    String filePath = "D:\\";
+    File directory = new File(filePath);
+
+    File[] files = directory.listFiles();
+    int count = 0;
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().endsWith("LogBus.txt")) {
+                    count++;
+                }
+            }
+            banyakLinusBeroperasi.setText(String.valueOf(count));
+        }
+        
+        this.countLinus = String.valueOf(count);
     }
 
     private void showListBusAccount(){
@@ -111,6 +133,7 @@ public class halamanAdmin extends javax.swing.JFrame {
         announcementContainer = new javax.swing.JTextArea();
         buttonHapus = new javax.swing.JButton();
         buttonKirimPengumuman = new javax.swing.JButton();
+        banyakLinusBeroperasi = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Admin");
@@ -166,7 +189,7 @@ public class halamanAdmin extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setText("Banyak linus yang sedang beroperasi : 2");
+        jLabel5.setText("Banyak linus yang sedang beroperasi : ");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
 
         listBus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -261,6 +284,9 @@ public class halamanAdmin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(buttonKirimPengumuman, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 560, 110, 40));
+
+        banyakLinusBeroperasi.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        getContentPane().add(banyakLinusBeroperasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 150, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -565,6 +591,7 @@ public class halamanAdmin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea announcementContainer;
+    private javax.swing.JLabel banyakLinusBeroperasi;
     private javax.swing.JButton buttonBuatPengumuman;
     private javax.swing.JButton buttonHapus;
     private javax.swing.JButton buttonHapusBus;

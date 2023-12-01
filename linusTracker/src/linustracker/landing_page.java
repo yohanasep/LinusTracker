@@ -17,8 +17,19 @@ public class landing_page extends javax.swing.JFrame {
         initComponents();
         announcementController();
         showLogLinus();
+        
+        halamanAdmin hadm = new halamanAdmin();
+        hadm.countLinusToday();
+        int banyakLinus = Integer.parseInt(halamanAdmin.countLinus);
+    
+        if (banyakLinus > 1){
+            System.out.println("ok");
+        } else {
+            btnLinus1.setVisible(false);
+            btnLinus2.setVisible(false);
+        }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -27,9 +38,11 @@ public class landing_page extends javax.swing.JFrame {
         loginButton = new javax.swing.JButton();
         logHaltePanel = new javax.swing.JPanel();
         logHalteText = new javax.swing.JLabel();
+        buttonRefreshLogLinus = new javax.swing.JButton();
         panelAnnouncement = new javax.swing.JPanel();
         announcement_body = new javax.swing.JLabel();
-        buttonRefreshLogLinus = new javax.swing.JButton();
+        btnLinus1 = new javax.swing.JButton();
+        btnLinus2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,6 +89,17 @@ public class landing_page extends javax.swing.JFrame {
 
         jPanel1.add(logHaltePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 180, 400));
 
+        buttonRefreshLogLinus.setBackground(new java.awt.Color(153, 51, 0));
+        buttonRefreshLogLinus.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 12)); // NOI18N
+        buttonRefreshLogLinus.setForeground(new java.awt.Color(255, 255, 255));
+        buttonRefreshLogLinus.setText("Refresh lokasi linus");
+        buttonRefreshLogLinus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonRefreshLogLinusActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buttonRefreshLogLinus, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 180, 30));
+
         panelAnnouncement.setBackground(new java.awt.Color(0, 0, 0));
 
         announcement_body.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
@@ -101,16 +125,31 @@ public class landing_page extends javax.swing.JFrame {
 
         jPanel1.add(panelAnnouncement, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 560, 450));
 
-        buttonRefreshLogLinus.setBackground(new java.awt.Color(153, 51, 0));
-        buttonRefreshLogLinus.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 12)); // NOI18N
-        buttonRefreshLogLinus.setForeground(new java.awt.Color(255, 255, 255));
-        buttonRefreshLogLinus.setText("Refresh lokasi linus");
-        buttonRefreshLogLinus.addActionListener(new java.awt.event.ActionListener() {
+        btnLinus1.setBackground(new java.awt.Color(153, 51, 0));
+        btnLinus1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 12)); // NOI18N
+        btnLinus1.setForeground(new java.awt.Color(255, 255, 255));
+        btnLinus1.setText("Linus 1");
+        btnLinus1.setBorderPainted(false);
+        btnLinus1.setMaximumSize(new java.awt.Dimension(70, 23));
+        btnLinus1.setMinimumSize(new java.awt.Dimension(70, 23));
+        btnLinus1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonRefreshLogLinusActionPerformed(evt);
+                btnLinus1ActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonRefreshLogLinus, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 180, 30));
+        jPanel1.add(btnLinus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 6, -1, 20));
+
+        btnLinus2.setBackground(new java.awt.Color(153, 51, 0));
+        btnLinus2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 12)); // NOI18N
+        btnLinus2.setForeground(new java.awt.Color(255, 255, 255));
+        btnLinus2.setText("Linus 2");
+        btnLinus2.setBorderPainted(false);
+        btnLinus2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLinus2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLinus2, new org.netbeans.lib.awtextra.AbsoluteConstraints(327, 6, -1, 20));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/peta.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 520));
@@ -136,19 +175,31 @@ public class landing_page extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
    
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-    login loginPage = new login();
+    login lg = new login();
     
-    loginPage.setVisible(true);
-    loginPage.pack();
-    loginPage.setLocationRelativeTo(null);
-    loginPage.setDefaultCloseOperation(landing_page.EXIT_ON_CLOSE);
-    this.dispose();
+    lg.setVisible(true);
+    lg.pack();
+    lg.setLocationRelativeTo(null);
+    lg.setDefaultCloseOperation(landing_page.EXIT_ON_CLOSE);
+    lg.dispose();
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void buttonRefreshLogLinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRefreshLogLinusActionPerformed
         // TODO add your handling code here:
         showLogLinus();
     }//GEN-LAST:event_buttonRefreshLogLinusActionPerformed
+
+    private void btnLinus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinus1ActionPerformed
+        // TODO add your handling code here:
+        logHalteText.setText("");
+        logHalteText.setText("Linus1");
+    }//GEN-LAST:event_btnLinus1ActionPerformed
+
+    private void btnLinus2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinus2ActionPerformed
+        // TODO add your handling code here:
+        logHalteText.setText("");
+        logHalteText.setText("Linus2");
+    }//GEN-LAST:event_btnLinus2ActionPerformed
         
     public void announcementController(){
     boolean showAnnouncemennt = false;
@@ -208,36 +259,49 @@ public class landing_page extends javax.swing.JFrame {
         
     public void showLogLinus() {
         String filePath = "D:\\";
-        String fileName = "logBus.txt";
+        File directory = new File(filePath);
 
-        File fileLog = new File(filePath + fileName);
-        
-        boolean cekeksistensi = fileLog.exists();
-        if(cekeksistensi == false){
+        File[] files = directory.listFiles();
+
+        File fileLog = null;
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().endsWith("LogBus.txt")) {
+                    fileLog = file;
+                    break;
+                }
+            }
+        }
+
+        if (fileLog != null) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(fileLog))) {
+                StringBuilder content = new StringBuilder();
+                String text;
+
+                while ((text = reader.readLine()) != null) {
+                    content.append(text);
+                }
+
+                logHalteText.setText("<HTML>" + content.toString() + "</HTML>");
+            } catch (IOException e) {
+                System.out.println("Error reading file");
+            }
+        } else {
             setNullText();
         }
-           
-        try(BufferedReader reader = new BufferedReader(new FileReader(fileLog))){
-            StringBuilder content= new StringBuilder();
-            String text;
-         
-            while ((text = reader.readLine()) != null) {
-                content.append(text);
-            }  
-
-            logHalteText.setText("<HTML>" + content.toString() + "</HTML>"); 
-        } catch (IOException e) {
-            System.out.println("file not exist");
-        }
     }
-    
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
+            new landing_page().setVisible(true);
         });
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel announcement_body;
+    private javax.swing.JButton btnLinus1;
+    private javax.swing.JButton btnLinus2;
     private javax.swing.JButton buttonRefreshLogLinus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

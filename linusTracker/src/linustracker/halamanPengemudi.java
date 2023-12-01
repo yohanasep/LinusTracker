@@ -2,19 +2,48 @@ package linustracker;
 
 import java.awt.event.ActionEvent;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class halamanPengemudi extends javax.swing.JFrame {
     private String selectedHalte;
     private File file;
     private FileWriter writeFile;
-    private String Vjam = "";
-
+    public String Vjam = "";
+    
+    public File fileLog;
+    
+    String username = login.username;
+    Connection connect;
+    
     public halamanPengemudi() {
         initComponents();
         jam();
+        createConnection();
+        
+        System.out.println(login.username);
     }
+    
+    void createConnection(){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/linus", "root", "");
+            
+            System.out.println("Connected to the database");
+
+        } catch(ClassNotFoundException ex){
+            System.out.println ("gagal " + ex.getMessage());        
+        } catch(SQLException ex){
+            System.out.println("gagal2 " + ex.getMessage());    
+        }
+        }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -197,6 +226,7 @@ public class halamanPengemudi extends javax.swing.JFrame {
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         // TODO add your handling code here:
+
         landing_page landingPage = new landing_page();
         landingPage.setVisible(true);
         landingPage.pack();
@@ -213,24 +243,25 @@ public class halamanPengemudi extends javax.swing.JFrame {
 
     private void akhiriButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_akhiriButtonActionPerformed
         // TODO add your handling code here:
-        landing_page landingPage = new landing_page();
-        landingPage.setVisible(true);
-        landingPage.pack();
-        landingPage.setLocationRelativeTo(null);
-        this.dispose();
-        landingPage.setNullText();
+        landing_page lp = new landing_page();
+        lp.setVisible(true);
+        lp.pack();
+        lp.setLocationRelativeTo(null);
+        lp.dispose();
+        lp.setNullText();
         
         try{
             String filePath = "D:\\";
-            String fileName = "logBus.txt";
+            String fileName = username + "LogBus.txt";
             file = new File(filePath+fileName);
             boolean cekeksistensi = file.exists();
                 if(cekeksistensi == true){
                     file.delete();
-                    System.out.println("berhasil delete");                
+                    System.out.println("berhasil delete file");                
                 } 
         } catch (Exception e){
-        e.printStackTrace();
+            System.out.println("gagal delete file");
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_akhiriButtonActionPerformed
@@ -246,13 +277,14 @@ public class halamanPengemudi extends javax.swing.JFrame {
     private void radioHalteFasilkomtiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioHalteFasilkomtiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_radioHalteFasilkomtiActionPerformed
+
     private String getSelectedHalte () {
     String halte = "";
     
     //create file if not exist
     try{
         String filePath = "D:\\";
-        String fileName = "logBus.txt";
+        String fileName = username + "LogBus.txt";
         file = new File(filePath+fileName);
         boolean cekeksistensi = file.exists();
             if(cekeksistensi == false){
@@ -262,7 +294,8 @@ public class halamanPengemudi extends javax.swing.JFrame {
                 writeFile = new FileWriter(file, true);
             }
     } catch (Exception e){
-    e.printStackTrace();
+        System.out.println("gagal cek file exist");
+        e.printStackTrace();
     }
     
     if (radioHaltePintu4.isSelected()) {
@@ -296,6 +329,7 @@ public class halamanPengemudi extends javax.swing.JFrame {
         }
             writeFile.close();
         } catch (Exception e){
+            System.out.println("gagal menandai halte");
             e.printStackTrace();
         }
     

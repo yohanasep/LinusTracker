@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 public class login extends javax.swing.JFrame {
 
-    private String username;
+    static String username;
     private String password;
    
     Connection connect;
@@ -30,7 +30,11 @@ public class login extends javax.swing.JFrame {
             System.out.println("gagal2 " + ex.getMessage());    
         }
         }
-   
+    
+    public void setSavedUname(){
+        this.username = username_login.getText();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -129,14 +133,19 @@ public class login extends javax.swing.JFrame {
                 try {
                     // Check login as supir
                     if (checkLogin(supirQuery, username_login.getText(), password_login.getText())) {
+                        String username = username_login.getText();
+
                         JOptionPane.showMessageDialog(null, "Login sebagai supir berhasil!");
+                        setSavedUname();
+                        
                         halamanPengemudi pengemudiPage = new halamanPengemudi();
                         pengemudiPage.setVisible(true);
                         pengemudiPage.pack();
                         pengemudiPage.setLocationRelativeTo(null);
                         pengemudiPage.setDefaultCloseOperation(login.EXIT_ON_CLOSE);
                         this.dispose();
-                     } 
+                       } 
+                    
                     // Check login as admin
                     else if (checkLogin(adminQuery, username_login.getText(), password_login.getText())) {
                         JOptionPane.showMessageDialog(null, "Login sebagai admin berhasil!");
