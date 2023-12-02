@@ -5,40 +5,37 @@ import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class halamanPengemudi extends javax.swing.JFrame {
+
     private String selectedHalte;
     private File file;
     private FileWriter writeFile;
     public String Vjam = "";
-    
+
     public File fileLog;
-    
+
     String username = login.username;
     Connection connect;
-    
+
     public halamanPengemudi() {
         initComponents();
         jam();
         createConnection();
     }
-    
-    void createConnection(){
-        try{
+
+    void createConnection() {
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/linus", "root", "");
-        } catch(ClassNotFoundException ex){
-            System.out.println ("gagal " + ex.getMessage());        
-        } catch(SQLException ex){
-            System.out.println("gagal2 " + ex.getMessage());    
+        } catch (ClassNotFoundException ex) {
+            System.out.println("gagal " + ex.getMessage());
+        } catch (SQLException ex) {
+            System.out.println("gagal2 " + ex.getMessage());
         }
-        }
-
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -81,11 +78,10 @@ public class halamanPengemudi extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(210, 105, 30));
         jPanel1.setToolTipText("");
 
-        logoutButton.setBackground(new java.awt.Color(153, 0, 0));
+        logoutButton.setBackground(new java.awt.Color(204, 51, 0));
         logoutButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         logoutButton.setForeground(new java.awt.Color(255, 255, 255));
         logoutButton.setText("Logout");
-        logoutButton.setBorderPainted(false);
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutButtonActionPerformed(evt);
@@ -103,9 +99,9 @@ public class halamanPengemudi extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
-                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -157,9 +153,9 @@ public class halamanPengemudi extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("<HTML>*PERINGATAN! Hanya tekan tombol AKHIRI apabila linus sudah selesai beroperasi hari ini</HTML>");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 680, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 660, -1));
 
-        akhiriButton.setBackground(new java.awt.Color(153, 0, 0));
+        akhiriButton.setBackground(new java.awt.Color(204, 51, 0));
         akhiriButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         akhiriButton.setForeground(new java.awt.Color(255, 255, 255));
         akhiriButton.setText("Akhiri");
@@ -190,7 +186,7 @@ public class halamanPengemudi extends javax.swing.JFrame {
         });
         getContentPane().add(radioHalteFMIPA, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 140, 30));
 
-        okButton.setBackground(new java.awt.Color(153, 0, 0));
+        okButton.setBackground(new java.awt.Color(204, 51, 0));
         okButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         okButton.setForeground(new java.awt.Color(255, 255, 255));
         okButton.setText("OK");
@@ -239,34 +235,34 @@ public class halamanPengemudi extends javax.swing.JFrame {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
 
-    getSelectedHalte();
-    landing_page showLogLinus = new landing_page();
-    showLogLinus.showLogLinus();
+        getSelectedHalte();
+        landing_page showLogLinus = new landing_page();
+        showLogLinus.showLogLinus();
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void akhiriButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_akhiriButtonActionPerformed
         // TODO add your handling code here:
         int dialogResult = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin mengakhiri track linus ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
-    
+
         if (dialogResult == JOptionPane.YES_OPTION) {
-        try{
-            String filePath = "D:\\";
-            String fileName = username + "LogBus.txt";
-            file = new File(filePath+fileName);
-            boolean cekeksistensi = file.exists();
-                if(cekeksistensi == true){
+            try {
+                String filePath = "D:\\";
+                String fileName = username + "LogBus.txt";
+                file = new File(filePath + fileName);
+                boolean cekeksistensi = file.exists();
+                if (cekeksistensi == true) {
                     file.delete();
-                } 
-        } catch (Exception e){
-            System.out.println("gagal delete file");
-            e.printStackTrace();
-        }
-        
-        landing_page lp = new landing_page();
-        lp.setVisible(true);
-        lp.pack();
-        lp.setLocationRelativeTo(null);
-        this.dispose();
+                }
+            } catch (Exception e) {
+                System.out.println("gagal delete file");
+                e.printStackTrace();
+            }
+
+            landing_page lp = new landing_page();
+            lp.setVisible(true);
+            lp.pack();
+            lp.setLocationRelativeTo(null);
+            this.dispose();
         }
     }//GEN-LAST:event_akhiriButtonActionPerformed
 
@@ -282,109 +278,134 @@ public class halamanPengemudi extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_radioHalteFasilkomtiActionPerformed
 
-    private String getSelectedHalte () {
-    String halte = "";
-    String filePath = "D:\\";
-    String fileName = username + "LogBus.txt";
-    file = new File(filePath+fileName);
+    private String getSelectedHalte() {
+        String halte = "";
+        String filePath = "D:\\";
+        String fileName = username + "LogBus.txt";
+        file = new File(filePath + fileName);
 
-    //create file if not exist
-    try{
-        boolean cekeksistensi = file.exists();
-        if(cekeksistensi == false){
-            file.createNewFile();
-            writeFile = new FileWriter(file, true);
-        } else {
-            writeFile = new FileWriter(file, true);
+        //create file if not exist
+        try {
+            boolean cekeksistensi = file.exists();
+            if (cekeksistensi == false) {
+                file.createNewFile();
+                writeFile = new FileWriter(file, true);
+            } else {
+                writeFile = new FileWriter(file, true);
+            }
+        } catch (Exception e) {
+            System.out.println("gagal cek file exist");
+            e.printStackTrace();
         }
-    } catch (Exception e){
-        System.out.println("gagal cek file exist");
-        e.printStackTrace();
-    }
-    
-    if (radioHaltePintu4.isSelected()) {
-        halte = "Halte Pintu 4 ";
-    } else if (radioHalteFarmasi.isSelected()) {
-        halte = "Halte Farmasi ";
-    } else if (radioHalteFMIPA.isSelected()) {
-        halte = "Halte FMIPA ";
-    } else if (radioHalteFEB.isSelected()) {
-        halte = "Halte FEB ";
-    } else if (radioHalteFISIP.isSelected()) {
-        halte = "Halte FISIP ";
-    } else if (radioHalteFH.isSelected()) {
-        halte = "Halte FH ";
-    } else if (radioHalteFIB.isSelected()) {
-        halte = "Halte FIB ";
-    } else if (radioHalteGEMA.isSelected()) {
-        halte = "Halte GEMA ";
-    } else if (radioHalteFK.isSelected()) {
-        halte = "Halte FK ";
-    } else if (radioHalteFasilkomti.isSelected()) {
-        halte = "Halte Fasilkomti ";
-    } 
-    
-//    try (BufferedReader file = new BufferedReader(new FileReader(filePath + fileName))) {
-//        String line;
-//        int currentLine = 1;
-//
-//        while ((line = file.readLine()) != null) {
-//            if (currentLine <= 4) {
-//                writeFile.write(line + System.lineSeparator()); 
-//            }
-//            currentLine++;
-//        }
-//    } catch (IOException e) {
-//        e.printStackTrace();
-//    }
-    
-    try{
-        if(halte != ""){
-            writeFile.write(halte + "&nbsp|&nbsp " + Vjam + " <br>\n");
-            JOptionPane.showMessageDialog(null, "Halte berhasil ditandai!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Pilih halte terlebih dahulu!");
+
+        if (radioHaltePintu4.isSelected()) {
+            halte = "Halte Pintu 4 ";
+        } else if (radioHalteFarmasi.isSelected()) {
+            halte = "Halte Farmasi ";
+        } else if (radioHalteFMIPA.isSelected()) {
+            halte = "Halte FMIPA ";
+        } else if (radioHalteFEB.isSelected()) {
+            halte = "Halte FEB ";
+        } else if (radioHalteFISIP.isSelected()) {
+            halte = "Halte FISIP ";
+        } else if (radioHalteFH.isSelected()) {
+            halte = "Halte FH ";
+        } else if (radioHalteFIB.isSelected()) {
+            halte = "Halte FIB ";
+        } else if (radioHalteGEMA.isSelected()) {
+            halte = "Halte GEMA ";
+        } else if (radioHalteFK.isSelected()) {
+            halte = "Halte FK ";
+        } else if (radioHalteFasilkomti.isSelected()) {
+            halte = "Halte Fasilkomti ";
         }
+
+        try (BufferedReader file = new BufferedReader(new FileReader(filePath + fileName))) {
+            StringBuilder write = new StringBuilder();
+            String line;
+            int currentLine = 1;
+            boolean isFull = false;
+
+            while ((line = file.readLine()) != null) {
+                if (currentLine > 14 && currentLine <= 20) {
+                    write.append(line).append(System.lineSeparator());
+                    isFull = true;
+                }
+                currentLine++;
+            }
+
+            if (!isFull) {
+                // Reset reader
+                file.close();
+
+                // Skip some lines
+                for (int i = 0; i < 14; i++) {
+                    file.readLine();
+                }
+
+                while ((line = file.readLine()) != null) {
+                    write.append(line).append(System.lineSeparator());
+                }
+
+                file.close();
+            }
+
+            try (FileWriter writer = new FileWriter(filePath + fileName)) {
+                writer.write(write.toString());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if (!halte.equals("")) {
+                writeFile.write(halte + "&nbsp|&nbsp " + Vjam + " <br>\n");
+                JOptionPane.showMessageDialog(null, "Halte berhasil ditandai!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Pilih halte terlebih dahulu!");
+            }
             writeFile.close();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("gagal menandai halte");
             e.printStackTrace();
         }
-    
-    return halte;
-    }
-    
-    public void jam(){
-        try{
-            java.awt.event.ActionListener taskPerformer = new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent ae){
-            String noljam = "";
-            String nolmenit = "";
-            String noldetik = "";
-            Calendar dt = Calendar.getInstance();
-            int jam = dt.get(Calendar.HOUR_OF_DAY);
-            int menit = dt.get(Calendar.MINUTE);
-            int detik = dt.get(Calendar.SECOND);
-            if(jam < 10){
-                noljam = "0";
-            } else if (menit < 10){
-                nolmenit = "0";
-            } else if (detik < 10) {
-                noldetik = "0";
 
-            }
-            String Sjam = String.format("%02d", jam);
-            String Smenit = String.format("%02d", menit);
-            String Sdetik = String.format("%02d", detik);
-            Vjam = Sjam + ":" + Smenit + ":" + Sdetik;
-            labelForJam.setText(Vjam);
-        }};
-        new javax.swing.Timer(1000, taskPerformer).start();
-        } catch (Exception e){
+        return halte;
+    }
+
+    public void jam() {
+        try {
+            java.awt.event.ActionListener taskPerformer = new java.awt.event.ActionListener() {
+                public void actionPerformed(ActionEvent ae) {
+                    String noljam = "";
+                    String nolmenit = "";
+                    String noldetik = "";
+                    Calendar dt = Calendar.getInstance();
+                    int jam = dt.get(Calendar.HOUR_OF_DAY);
+                    int menit = dt.get(Calendar.MINUTE);
+                    int detik = dt.get(Calendar.SECOND);
+                    if (jam < 10) {
+                        noljam = "0";
+                    } else if (menit < 10) {
+                        nolmenit = "0";
+                    } else if (detik < 10) {
+                        noldetik = "0";
+
+                    }
+                    String Sjam = String.format("%02d", jam);
+                    String Smenit = String.format("%02d", menit);
+                    String Sdetik = String.format("%02d", detik);
+                    Vjam = Sjam + ":" + Smenit + ":" + Sdetik;
+                    labelForJam.setText(Vjam);
+                }
+            };
+            new javax.swing.Timer(1000, taskPerformer).start();
+        } catch (Exception e) {
             System.out.println("Error: " + e);
         }
-       }
-    
+    }
+
     /**
      * @param args the command line arguments
      */

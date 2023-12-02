@@ -6,24 +6,25 @@ import java.io.File;
 import java.util.Calendar;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.logging.*;
 import javax.swing.JOptionPane;
 
 public class halamanAdmin extends javax.swing.JFrame {
+
     static String countLinus;
+
     public halamanAdmin() {
         initComponents();
         hideFields();
         jam();
-        
+
         countLinusToday();
         showListBusAccount();
     }
-    
+
     private void hideFields() {
         buttonHapus.setVisible(false);
     }
-    
+
     private void showFieldsTambahBus() {
         jLabel10.setVisible(true);
         inputUsername.setVisible(true);
@@ -31,20 +32,20 @@ public class halamanAdmin extends javax.swing.JFrame {
         inputPass.setVisible(true);
         buttonTambah.setVisible(true);
     }
-    
+
     private void showFieldsHapusBus() {
         jLabel1.setVisible(false);
         inputPass.setVisible(false);
         buttonTambah.setVisible(false);
         buttonHapus.setVisible(true);
     }
-    
-    public void countLinusToday() {
-    String filePath = "D:\\";
-    File directory = new File(filePath);
 
-    File[] files = directory.listFiles();
-    int count = 0;
+    public void countLinusToday() {
+        String filePath = "D:\\";
+        File directory = new File(filePath);
+
+        File[] files = directory.listFiles();
+        int count = 0;
 
         if (files != null) {
             for (File file : files) {
@@ -54,64 +55,65 @@ public class halamanAdmin extends javax.swing.JFrame {
             }
             banyakLinusBeroperasi.setText(String.valueOf(count));
         }
-        
+
         this.countLinus = String.valueOf(count);
     }
 
     private void showListBusAccount() {
-    listBus.setVisible(true);
-    
-    Connection connection = null;
-    Statement statement = null;
-    
-    try {
-        // URL, username, dan password untuk koneksi ke database MySQL
-        String url = "jdbc:mysql://localhost:3306/linus";
-        String user = "root";
-        String passwordDb = "";
+        listBus.setVisible(true);
 
-        // Membuat koneksi ke database
-        connection = DriverManager.getConnection(url, user, passwordDb);
+        Connection connection = null;
+        Statement statement = null;
 
-        // Membuat statement SQL
-        statement = connection.createStatement();
-
-        // Query SQL
-        String showListBusQuery = "SELECT username FROM user_bus";
-         
-        // Menjalankan query
-        ResultSet rs = statement.executeQuery(showListBusQuery);
-        
-        StringBuilder usernames = new StringBuilder();
-        
-        boolean isLast = false;
-        while (rs.next()) {
-            String username = rs.getString("username");
-            isLast = rs.isLast();
-            usernames.append(username);
-            if(!isLast){
-             usernames.append(", \n");
-            }
-        }
-
-        listBus.setText(usernames.toString());
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        // Menutup statement dan koneksi
         try {
-            if (statement != null) {
-                statement.close();
+            // URL, username, dan password untuk koneksi ke database MySQL
+            String url = "jdbc:mysql://localhost:3306/linus";
+            String user = "root";
+            String passwordDb = "";
+
+            // Membuat koneksi ke database
+            connection = DriverManager.getConnection(url, user, passwordDb);
+
+            // Membuat statement SQL
+            statement = connection.createStatement();
+
+            // Query SQL
+            String showListBusQuery = "SELECT username FROM user_bus";
+
+            // Menjalankan query
+            ResultSet rs = statement.executeQuery(showListBusQuery);
+
+            StringBuilder usernames = new StringBuilder();
+
+            boolean isLast = false;
+            while (rs.next()) {
+                String username = rs.getString("username");
+                isLast = rs.isLast();
+                usernames.append(username);
+                if (!isLast) {
+                    usernames.append(", \n");
+                }
             }
-            if (connection != null) {
-                connection.close();
-            }
+
+            listBus.setText(usernames.toString());
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            // Menutup statement dan koneksi
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-    }
 
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -297,33 +299,33 @@ public class halamanAdmin extends javax.swing.JFrame {
         hideFields();
         showFieldsHapusBus();
     }//GEN-LAST:event_buttonHapusBusActionPerformed
-        
+
     private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
         // TODO add your handling code here:
         String username = inputUsername.getText();
         String password = inputPass.getText();
 
         if (!username.isEmpty() && !password.isEmpty()) {
-        // Jika kedua kolom diisi, simpan data ke database
+            // Jika kedua kolom diisi, simpan data ke database
             saveUserBusToDatabase();
-        } else{
+        } else {
             JOptionPane.showMessageDialog(this, "Username dan password harus diisi!");
         }
     }//GEN-LAST:event_buttonTambahActionPerformed
-    
+
     private void buttonTambahBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahBusActionPerformed
-    // TODO add your handling code here:
+        // TODO add your handling code here:
         hideFields();
         showFieldsTambahBus();
     }//GEN-LAST:event_buttonTambahBusActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-    landing_page landingPage = new landing_page();
-    
-    landingPage.setVisible(true);
-    landingPage.pack();
-    landingPage.setLocationRelativeTo(null);
-    this.dispose();
+        landing_page landingPage = new landing_page();
+
+        landingPage.setVisible(true);
+        landingPage.pack();
+        landingPage.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void inputUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputUsernameActionPerformed
@@ -349,68 +351,19 @@ public class halamanAdmin extends javax.swing.JFrame {
     private void buttonKirimPengumumanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKirimPengumumanActionPerformed
         // TODO add your handling code here:
         String announcement = announcementContainer.getText();
-        
+
         if (!announcement.isEmpty()) {
             saveAnnouncementToDatabase();
-        } else{
+        } else {
             JOptionPane.showMessageDialog(this, "Tulis pengumuman terlebih dahulu!");
         }
     }//GEN-LAST:event_buttonKirimPengumumanActionPerformed
 
     private void saveUserBusToDatabase() {
-     // Ambil data dari JTextField
-    String username = inputUsername.getText();
-    String password = inputPass.getText();
+        // Ambil data dari JTextField
+        String username = inputUsername.getText();
+        String password = inputPass.getText();
 
-    // Menjalankan koneksi ke database
-    Connection connection = null;
-    Statement statement = null;
-    
-    try {
-        // URL, username, dan password untuk koneksi ke database MySQL
-        String url = "jdbc:mysql://localhost:3306/linus";
-        String user = "root";
-        String passwordDb = "";
-
-        // Membuat koneksi ke database
-        connection = DriverManager.getConnection(url, user, passwordDb);
-
-        // Membuat statement SQL
-        statement = connection.createStatement();
-
-        // Query SQL untuk menambahkan data bus ke dalam tabel
-        String query = "INSERT INTO user_bus (username, password) VALUES ('" + username + "', '" + password + "')";
-                
-        // Menjalankan query
-        statement.executeUpdate(query);
-
-        // Notifikasi bahwa data berhasil ditambahkan
-        JOptionPane.showMessageDialog(this, "Data supir berhasil ditambahkan ke dalam database!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        // Menutup statement dan koneksi
-        try {
-            if (statement != null) {
-                statement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    }
-    
-    private void DeleteDataSupir() {
-    String username = inputUsername.getText();
-
-    if(!username.isEmpty()){
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin menghapus data linus '" + username + "'?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
-    
-        if (dialogResult == JOptionPane.YES_OPTION) {
         // Menjalankan koneksi ke database
         Connection connection = null;
         Statement statement = null;
@@ -427,20 +380,14 @@ public class halamanAdmin extends javax.swing.JFrame {
             // Membuat statement SQL
             statement = connection.createStatement();
 
-            // Query SQL untuk menghapus data bus dari tabel
-            String query = "DELETE FROM user_bus WHERE username = '" + username + "' ";
+            // Query SQL untuk menambahkan data bus ke dalam tabel
+            String query = "INSERT INTO user_bus (username, password) VALUES ('" + username + "', '" + password + "')";
 
             // Menjalankan query
-            int rowsAffected = statement.executeUpdate(query);
-            
-            // Cek apakah data berhasil dihapus
-            if (rowsAffected > 0) {
-                // Notifikasi bahwa data berhasil dihapus
-                JOptionPane.showMessageDialog(this, "Data bus berhasil dihapus di database!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                // Notifikasi bahwa data tidak ditemukan
-                JOptionPane.showMessageDialog(this, "Data bus tidak ditemukan.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            statement.executeUpdate(query);
+
+            // Notifikasi bahwa data berhasil ditambahkan
+            JOptionPane.showMessageDialog(this, "Data supir berhasil ditambahkan ke dalam database!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -457,91 +404,147 @@ public class halamanAdmin extends javax.swing.JFrame {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void DeleteDataSupir() {
+        String username = inputUsername.getText();
+
+        if (!username.isEmpty()) {
+            int dialogResult = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin menghapus data linus '" + username + "'?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                // Menjalankan koneksi ke database
+                Connection connection = null;
+                Statement statement = null;
+
+                try {
+                    // URL, username, dan password untuk koneksi ke database MySQL
+                    String url = "jdbc:mysql://localhost:3306/linus";
+                    String user = "root";
+                    String passwordDb = "";
+
+                    // Membuat koneksi ke database
+                    connection = DriverManager.getConnection(url, user, passwordDb);
+
+                    // Membuat statement SQL
+                    statement = connection.createStatement();
+
+                    // Query SQL untuk menghapus data bus dari tabel
+                    String query = "DELETE FROM user_bus WHERE username = '" + username + "' ";
+
+                    // Menjalankan query
+                    int rowsAffected = statement.executeUpdate(query);
+
+                    // Cek apakah data berhasil dihapus
+                    if (rowsAffected > 0) {
+                        // Notifikasi bahwa data berhasil dihapus
+                        JOptionPane.showMessageDialog(this, "Data bus berhasil dihapus di database!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        // Notifikasi bahwa data tidak ditemukan
+                        JOptionPane.showMessageDialog(this, "Data bus tidak ditemukan.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    // Menutup statement dan koneksi
+                    try {
+                        if (statement != null) {
+                            statement.close();
+                        }
+                        if (connection != null) {
+                            connection.close();
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Masukkan username yang ingin dihapus terlebih dahulu!");
         }
-    
-    } else {
-        JOptionPane.showMessageDialog(this, "Masukkan username yang ingin dihapus terlebih dahulu!");
     }
-    }
-    
-    private void saveAnnouncementToDatabase(){
-    String announcement = announcementContainer.getText();
-    LocalDate today = LocalDate.now();
 
-    // Menjalankan koneksi ke database
-    Connection connection = null;
-    Statement statement = null;
-    
-    try {
-        // URL, username, dan password untuk koneksi ke database MySQL
-        String url = "jdbc:mysql://localhost:3306/linus";
-        String user = "root";
-        String passwordDb = "";
+    private void saveAnnouncementToDatabase() {
+        String announcement = announcementContainer.getText();
+        LocalDate today = LocalDate.now();
 
-        // Membuat koneksi ke database
-        connection = DriverManager.getConnection(url, user, passwordDb);
+        // Menjalankan koneksi ke database
+        Connection connection = null;
+        Statement statement = null;
 
-        // Membuat statement SQL
-        statement = connection.createStatement();
-
-        // Query SQL
-        String query = "INSERT INTO announcement (announcement_body, date) VALUES ('" + announcement + "', '" + today + "')";
-                
-        // Menjalankan query
-        statement.executeUpdate(query);
-        
-        // Notifikasi bahwa data berhasil ditambahkan
-        JOptionPane.showMessageDialog(this, "Pengumuman berhasil dibuat!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        // Menutup statement dan koneksi
         try {
-            if (statement != null) {
-                statement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
+            // URL, username, dan password untuk koneksi ke database MySQL
+            String url = "jdbc:mysql://localhost:3306/linus";
+            String user = "root";
+            String passwordDb = "";
+
+            // Membuat koneksi ke database
+            connection = DriverManager.getConnection(url, user, passwordDb);
+
+            // Membuat statement SQL
+            statement = connection.createStatement();
+
+            // Query SQL
+            String query = "INSERT INTO announcement (announcement_body, date) VALUES ('" + announcement + "', '" + today + "')";
+
+            // Menjalankan query
+            statement.executeUpdate(query);
+
+            // Notifikasi bahwa data berhasil ditambahkan
+            JOptionPane.showMessageDialog(this, "Pengumuman berhasil dibuat!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            // Menutup statement dan koneksi
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
-    }
-    
-     public void jam(){
-        try{
-        ActionListener taskPerformer = new ActionListener() {
-        public void actionPerformed(ActionEvent ae){
-        String Vjam;
-        String noljam = "";
-        String nolmenit = "";
-        String noldetik = "";
-        Calendar dt = Calendar.getInstance();
-        int jam = dt.get(Calendar.HOUR_OF_DAY);
-        int menit = dt.get(Calendar.MINUTE);
-        int detik = dt.get(Calendar.SECOND);
-        if(jam < 10){
-            noljam = "0";
-        } else if (menit < 10){
-            nolmenit = "0";
-        } else if (detik < 10) {
-            noldetik = "0";
 
-        }
-        String Sjam = String.format("%02d", jam);
-        String Smenit = String.format("%02d", menit);
-        String Sdetik = String.format("%02d", detik);
-        Vjam = Sjam + ":" + Smenit + ":" + Sdetik;
-        labelForJam.setText(Vjam);
-        }};
-        new javax.swing.Timer(1000, taskPerformer).start();
-        } catch (Exception e){
+    public void jam() {
+        try {
+            ActionListener taskPerformer = new ActionListener() {
+                public void actionPerformed(ActionEvent ae) {
+                    String Vjam;
+                    String noljam = "";
+                    String nolmenit = "";
+                    String noldetik = "";
+                    Calendar dt = Calendar.getInstance();
+                    int jam = dt.get(Calendar.HOUR_OF_DAY);
+                    int menit = dt.get(Calendar.MINUTE);
+                    int detik = dt.get(Calendar.SECOND);
+                    if (jam < 10) {
+                        noljam = "0";
+                    } else if (menit < 10) {
+                        nolmenit = "0";
+                    } else if (detik < 10) {
+                        noldetik = "0";
+
+                    }
+                    String Sjam = String.format("%02d", jam);
+                    String Smenit = String.format("%02d", menit);
+                    String Sdetik = String.format("%02d", detik);
+                    Vjam = Sjam + ":" + Smenit + ":" + Sdetik;
+                    labelForJam.setText(Vjam);
+                }
+            };
+            new javax.swing.Timer(1000, taskPerformer).start();
+        } catch (Exception e) {
             System.out.println("Error: " + e);
         }
-       }
-    
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -601,4 +604,4 @@ public class halamanAdmin extends javax.swing.JFrame {
     private javax.swing.JButton logoutButton;
     // End of variables declaration//GEN-END:variables
 
-  }
+}

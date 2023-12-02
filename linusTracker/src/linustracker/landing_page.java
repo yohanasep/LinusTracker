@@ -11,28 +11,29 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class landing_page extends javax.swing.JFrame {
+
     static private String showLogLinus;
-    
+
     public landing_page() {
         initComponents();
         announcementController();
         showLogLinus();
         hideBtnPilihLinus();
     }
-    
-    public void hideBtnPilihLinus(){
+
+    public void hideBtnPilihLinus() {
         halamanAdmin hadm = new halamanAdmin();
         hadm.countLinusToday();
         int banyakLinus = Integer.parseInt(halamanAdmin.countLinus);
 
-        if (banyakLinus > 1){
+        if (banyakLinus > 1) {
             System.out.println("ok");
         } else {
             btnLinus1.setVisible(false);
             btnLinus2.setVisible(false);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -190,15 +191,15 @@ public class landing_page extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-   
+
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-    login lg = new login();
-    
-    lg.setVisible(true);
-    lg.pack();
-    lg.setLocationRelativeTo(null);
-    lg.setDefaultCloseOperation(landing_page.EXIT_ON_CLOSE);
-    this.dispose();
+        login lg = new login();
+
+        lg.setVisible(true);
+        lg.pack();
+        lg.setLocationRelativeTo(null);
+        lg.setDefaultCloseOperation(landing_page.EXIT_ON_CLOSE);
+        this.dispose();
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void buttonRefreshLogLinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRefreshLogLinusActionPerformed
@@ -210,7 +211,7 @@ public class landing_page extends javax.swing.JFrame {
         // TODO add your handling code here:
         logHalteText.setText("");
         logHalteText.setText("Linus1");
-        
+
         String filePath = "D:\\";
         File directory = new File(filePath);
         File[] files = directory.listFiles((dir, name) -> name.endsWith("LogBus.txt"));
@@ -235,7 +236,7 @@ public class landing_page extends javax.swing.JFrame {
         // TODO add your handling code here:
         logHalteText.setText("");
         logHalteText.setText("Linus2");
-        
+
         String filePath = "D:\\";
         File directory = new File(filePath);
         File[] files = directory.listFiles((dir, name) -> name.endsWith("LogBus.txt"));
@@ -257,7 +258,7 @@ public class landing_page extends javax.swing.JFrame {
 
     private void btnAnnouncementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnnouncementActionPerformed
         // TODO add your handling code here:
-        if(!panelAnnouncement.isVisible()){
+        if (!panelAnnouncement.isVisible()) {
             announcementController();
             btnAnnouncement.setText("Tutup pengumuman");
         } else {
@@ -266,61 +267,61 @@ public class landing_page extends javax.swing.JFrame {
             panelAnnouncement.setVisible(false);
         }
     }//GEN-LAST:event_btnAnnouncementActionPerformed
-        
-    public void announcementController(){
-    Connection connection = null;
-    Statement statement = null;
-    
-    try {
-        // URL, username, dan password untuk koneksi ke database MySQL
-        String url = "jdbc:mysql://localhost:3306/linus";
-        String user = "root";
-        String passwordDb = "";
 
-        // Membuat koneksi ke database
-        connection = DriverManager.getConnection(url, user, passwordDb);
+    public void announcementController() {
+        Connection connection = null;
+        Statement statement = null;
 
-        // Membuat statement SQL
-        statement = connection.createStatement();
-
-        // Query SQL
-        String showAnnouncement = "SELECT announcement_body FROM announcement WHERE date = CURDATE() ORDER BY id DESC LIMIT 1";
-        
-        // Menjalankan query
-        ResultSet rs = statement.executeQuery(showAnnouncement);
-
-        if(rs.next()){
-            btnAnnouncement.setVisible(true);
-            panelAnnouncement.setVisible(true);
-            String announcement = rs.getString("announcement_body");
-            announcement_body.setText("<HTML>" + announcement);
-        } else {
-            panelAnnouncement.setVisible(false);
-            announcement_body.setText("");
-            btnAnnouncement.setVisible(false);
-        }
-        
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        // Menutup statement dan koneksi
         try {
-            if (statement != null) {
-                statement.close();
+            // URL, username, dan password untuk koneksi ke database MySQL
+            String url = "jdbc:mysql://localhost:3306/linus";
+            String user = "root";
+            String passwordDb = "";
+
+            // Membuat koneksi ke database
+            connection = DriverManager.getConnection(url, user, passwordDb);
+
+            // Membuat statement SQL
+            statement = connection.createStatement();
+
+            // Query SQL
+            String showAnnouncement = "SELECT announcement_body FROM announcement WHERE date = CURDATE() ORDER BY id DESC LIMIT 1";
+
+            // Menjalankan query
+            ResultSet rs = statement.executeQuery(showAnnouncement);
+
+            if (rs.next()) {
+                btnAnnouncement.setVisible(true);
+                panelAnnouncement.setVisible(true);
+                String announcement = rs.getString("announcement_body");
+                announcement_body.setText("<HTML>" + announcement);
+            } else {
+                panelAnnouncement.setVisible(false);
+                announcement_body.setText("");
+                btnAnnouncement.setVisible(false);
             }
-            if (connection != null) {
-                connection.close();
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            // Menutup statement dan koneksi
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
+
+    public void setNullText() {
+        logHalteText.setText("<HTML>Maaf, tidak ada linus yang sedang beroperasi saat ini<HTML>");
     }
-    
-    public void setNullText(){
-        logHalteText.setText("<HTML>Maaf, linus belum beroperasi saat ini<HTML>");
-    }
-        
+
     public void showLogLinus() {
         String filePath = "D:\\";
         File directory = new File(filePath);
@@ -361,7 +362,7 @@ public class landing_page extends javax.swing.JFrame {
             new landing_page().setVisible(true);
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel announcement_body;
     private javax.swing.JButton btnAnnouncement;

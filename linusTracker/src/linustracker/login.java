@@ -1,37 +1,35 @@
 package linustracker;
 
 import java.sql.*;
-import java.util.*;
-import java.util.logging.*;
 import javax.swing.JOptionPane;
-
 
 public class login extends javax.swing.JFrame {
 
     static String username;
     private String password;
-   
+
     Connection connect;
+
     public login() {
         initComponents();
         createConnection();
     }
-    
-    void createConnection(){
-        try{
+
+    void createConnection() {
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/linus", "root", "");
-        } catch(ClassNotFoundException ex){
-            System.out.println ("gagal " + ex.getMessage());        
-        } catch(SQLException ex){
-            System.out.println("gagal2 " + ex.getMessage());    
+        } catch (ClassNotFoundException ex) {
+            System.out.println("gagal " + ex.getMessage());
+        } catch (SQLException ex) {
+            System.out.println("gagal2 " + ex.getMessage());
         }
-        }
-    
-    public void setSavedUname(){
+    }
+
+    public void setSavedUname() {
         this.username = username_login.getText();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -118,50 +116,47 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_username_loginActionPerformed
 
     private void button_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_loginActionPerformed
-            if(username_login.getText().equals("") || password_login.getText().equals("")) {
+        if (username_login.getText().equals("") || password_login.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Username dan Password harus diisi!");
-            } else {
-                // Query untuk mengambil data dari database untuk login sebagai supir
-                String supirQuery = "SELECT * FROM user_bus WHERE username=? AND password=?";
+        } else {
+            // Query untuk mengambil data dari database untuk login sebagai supir
+            String supirQuery = "SELECT * FROM user_bus WHERE username=? AND password=?";
 
-                // Query untuk mengambil data dari database untuk login sebagai admin
-                String adminQuery = "SELECT * FROM admin WHERE username=? AND password=?";
+            // Query untuk mengambil data dari database untuk login sebagai admin
+            String adminQuery = "SELECT * FROM admin WHERE username=? AND password=?";
 
-                try {
-                    // Check login as supir
-                    if (checkLogin(supirQuery, username_login.getText(), password_login.getText())) {
-                        String username = username_login.getText();
+            try {
+                // Check login as supir
+                if (checkLogin(supirQuery, username_login.getText(), password_login.getText())) {
+                    String username = username_login.getText();
 
-                        JOptionPane.showMessageDialog(null, "Login sebagai supir berhasil!");
-                        setSavedUname();
-                        
-                        halamanPengemudi pengemudiPage = new halamanPengemudi();
-                        pengemudiPage.setVisible(true);
-                        pengemudiPage.pack();
-                        pengemudiPage.setLocationRelativeTo(null);
-                        pengemudiPage.setDefaultCloseOperation(login.EXIT_ON_CLOSE);
-                        this.dispose();
-                       } 
-                    
-                    // Check login as admin
-                    else if (checkLogin(adminQuery, username_login.getText(), password_login.getText())) {
-                        JOptionPane.showMessageDialog(null, "Login sebagai admin berhasil!");
-                        halamanAdmin adminPage = new halamanAdmin();
-                        adminPage.setVisible(true);
-                        adminPage.pack();
-                        adminPage.setLocationRelativeTo(null);
-                        adminPage.setDefaultCloseOperation(login.EXIT_ON_CLOSE);
-                        this.dispose();
-                    } 
-                    // Invalid login
-                    else {
-                        JOptionPane.showMessageDialog(null, "Username atau Password salah!");
-                    }
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
-                    }
+                    JOptionPane.showMessageDialog(null, "Login sebagai supir berhasil!");
+                    setSavedUname();
+
+                    halamanPengemudi pengemudiPage = new halamanPengemudi();
+                    pengemudiPage.setVisible(true);
+                    pengemudiPage.pack();
+                    pengemudiPage.setLocationRelativeTo(null);
+                    pengemudiPage.setDefaultCloseOperation(login.EXIT_ON_CLOSE);
+                    this.dispose();
+                } // Check login as admin
+                else if (checkLogin(adminQuery, username_login.getText(), password_login.getText())) {
+                    JOptionPane.showMessageDialog(null, "Login sebagai admin berhasil!");
+                    halamanAdmin adminPage = new halamanAdmin();
+                    adminPage.setVisible(true);
+                    adminPage.pack();
+                    adminPage.setLocationRelativeTo(null);
+                    adminPage.setDefaultCloseOperation(login.EXIT_ON_CLOSE);
+                    this.dispose();
+                } // Invalid login
+                else {
+                    JOptionPane.showMessageDialog(null, "Username atau Password salah!");
                 }
-             }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+            }
+        }
+    }
 
     private boolean checkLogin(String query, String username, String password) throws SQLException {
         try (PreparedStatement preparedStatement = connect.prepareStatement(query)) {
