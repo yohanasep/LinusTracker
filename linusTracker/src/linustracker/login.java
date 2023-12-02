@@ -21,9 +21,6 @@ public class login extends javax.swing.JFrame {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/linus", "root", "");
-            
-            System.out.println("Connected to the database");
-
         } catch(ClassNotFoundException ex){
             System.out.println ("gagal " + ex.getMessage());        
         } catch(SQLException ex){

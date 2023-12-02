@@ -17,11 +17,14 @@ public class landing_page extends javax.swing.JFrame {
         initComponents();
         announcementController();
         showLogLinus();
-        
+        hideBtnPilihLinus();
+    }
+    
+    public void hideBtnPilihLinus(){
         halamanAdmin hadm = new halamanAdmin();
         hadm.countLinusToday();
         int banyakLinus = Integer.parseInt(halamanAdmin.countLinus);
-    
+
         if (banyakLinus > 1){
             System.out.println("ok");
         } else {
@@ -39,10 +42,11 @@ public class landing_page extends javax.swing.JFrame {
         logHaltePanel = new javax.swing.JPanel();
         logHalteText = new javax.swing.JLabel();
         buttonRefreshLogLinus = new javax.swing.JButton();
-        panelAnnouncement = new javax.swing.JPanel();
-        announcement_body = new javax.swing.JLabel();
         btnLinus1 = new javax.swing.JButton();
         btnLinus2 = new javax.swing.JButton();
+        btnAnnouncement = new javax.swing.JButton();
+        panelAnnouncement = new javax.swing.JPanel();
+        announcement_body = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -66,7 +70,7 @@ public class landing_page extends javax.swing.JFrame {
                 loginButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 6, 70, 20));
+        jPanel1.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 6, 70, 20));
 
         logHalteText.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
@@ -75,7 +79,7 @@ public class landing_page extends javax.swing.JFrame {
         logHaltePanelLayout.setHorizontalGroup(
             logHaltePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logHaltePanelLayout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(11, Short.MAX_VALUE)
                 .addComponent(logHalteText, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -99,6 +103,45 @@ public class landing_page extends javax.swing.JFrame {
             }
         });
         jPanel1.add(buttonRefreshLogLinus, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 180, 30));
+
+        btnLinus1.setBackground(new java.awt.Color(153, 51, 0));
+        btnLinus1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 12)); // NOI18N
+        btnLinus1.setForeground(new java.awt.Color(255, 255, 255));
+        btnLinus1.setText("Linus 1");
+        btnLinus1.setMaximumSize(new java.awt.Dimension(70, 23));
+        btnLinus1.setMinimumSize(new java.awt.Dimension(70, 23));
+        btnLinus1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLinus1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLinus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 6, -1, 20));
+
+        btnLinus2.setBackground(new java.awt.Color(153, 51, 0));
+        btnLinus2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 12)); // NOI18N
+        btnLinus2.setForeground(new java.awt.Color(255, 255, 255));
+        btnLinus2.setText("Linus 2");
+        btnLinus2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLinus2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLinus2, new org.netbeans.lib.awtextra.AbsoluteConstraints(327, 6, -1, 20));
+
+        btnAnnouncement.setBackground(new java.awt.Color(153, 0, 0));
+        btnAnnouncement.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 12)); // NOI18N
+        btnAnnouncement.setForeground(new java.awt.Color(255, 255, 255));
+        btnAnnouncement.setText("Tutup pengumuman");
+        btnAnnouncement.setBorderPainted(false);
+        btnAnnouncement.setMaximumSize(new java.awt.Dimension(72, 23));
+        btnAnnouncement.setMinimumSize(new java.awt.Dimension(72, 23));
+        btnAnnouncement.setPreferredSize(new java.awt.Dimension(72, 23));
+        btnAnnouncement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnnouncementActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAnnouncement, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 6, 150, 20));
 
         panelAnnouncement.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -124,32 +167,6 @@ public class landing_page extends javax.swing.JFrame {
         );
 
         jPanel1.add(panelAnnouncement, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 560, 450));
-
-        btnLinus1.setBackground(new java.awt.Color(153, 51, 0));
-        btnLinus1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 12)); // NOI18N
-        btnLinus1.setForeground(new java.awt.Color(255, 255, 255));
-        btnLinus1.setText("Linus 1");
-        btnLinus1.setBorderPainted(false);
-        btnLinus1.setMaximumSize(new java.awt.Dimension(70, 23));
-        btnLinus1.setMinimumSize(new java.awt.Dimension(70, 23));
-        btnLinus1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLinus1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnLinus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 6, -1, 20));
-
-        btnLinus2.setBackground(new java.awt.Color(153, 51, 0));
-        btnLinus2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 12)); // NOI18N
-        btnLinus2.setForeground(new java.awt.Color(255, 255, 255));
-        btnLinus2.setText("Linus 2");
-        btnLinus2.setBorderPainted(false);
-        btnLinus2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLinus2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnLinus2, new org.netbeans.lib.awtextra.AbsoluteConstraints(327, 6, -1, 20));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/peta.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 520));
@@ -181,7 +198,7 @@ public class landing_page extends javax.swing.JFrame {
     lg.pack();
     lg.setLocationRelativeTo(null);
     lg.setDefaultCloseOperation(landing_page.EXIT_ON_CLOSE);
-    lg.dispose();
+    this.dispose();
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void buttonRefreshLogLinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRefreshLogLinusActionPerformed
@@ -193,19 +210,64 @@ public class landing_page extends javax.swing.JFrame {
         // TODO add your handling code here:
         logHalteText.setText("");
         logHalteText.setText("Linus1");
+        
+        String filePath = "D:\\";
+        File directory = new File(filePath);
+        File[] files = directory.listFiles((dir, name) -> name.endsWith("LogBus.txt"));
+        File fileLog = files[0];
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileLog))) {
+            StringBuilder content = new StringBuilder();
+            String text;
+
+            while ((text = reader.readLine()) != null) {
+                content.append(text);
+            }
+
+            logHalteText.setText("<HTML>" + content.toString() + "</HTML>");
+        } catch (IOException e) {
+            System.out.println("Error reading file");
+        }
+
     }//GEN-LAST:event_btnLinus1ActionPerformed
 
     private void btnLinus2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinus2ActionPerformed
         // TODO add your handling code here:
         logHalteText.setText("");
         logHalteText.setText("Linus2");
+        
+        String filePath = "D:\\";
+        File directory = new File(filePath);
+        File[] files = directory.listFiles((dir, name) -> name.endsWith("LogBus.txt"));
+        File fileLog = files[1];
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileLog))) {
+            StringBuilder content = new StringBuilder();
+            String text;
+
+            while ((text = reader.readLine()) != null) {
+                content.append(text);
+            }
+
+            logHalteText.setText("<HTML>" + content.toString() + "</HTML>");
+        } catch (IOException e) {
+            System.out.println("Error reading file");
+        }
     }//GEN-LAST:event_btnLinus2ActionPerformed
+
+    private void btnAnnouncementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnnouncementActionPerformed
+        // TODO add your handling code here:
+        if(!panelAnnouncement.isVisible()){
+            announcementController();
+            btnAnnouncement.setText("Tutup pengumuman");
+        } else {
+            btnAnnouncement.setText("Lihat pengumuman");
+            announcement_body.setText("");
+            panelAnnouncement.setVisible(false);
+        }
+    }//GEN-LAST:event_btnAnnouncementActionPerformed
         
     public void announcementController(){
-    boolean showAnnouncemennt = false;
-    if(showAnnouncemennt){
-    panelAnnouncement.setVisible(true);
-        
     Connection connection = null;
     Statement statement = null;
     
@@ -222,17 +284,22 @@ public class landing_page extends javax.swing.JFrame {
         statement = connection.createStatement();
 
         // Query SQL
-        String showAnnouncement = "SELECT announcement_body FROM announcement ORDER BY date DESC LIMIT 1";
-                 
+        String showAnnouncement = "SELECT announcement_body FROM announcement WHERE date = CURDATE() ORDER BY id DESC LIMIT 1";
+        
         // Menjalankan query
         ResultSet rs = statement.executeQuery(showAnnouncement);
 
-        while(rs.next()){
+        if(rs.next()){
+            btnAnnouncement.setVisible(true);
+            panelAnnouncement.setVisible(true);
             String announcement = rs.getString("announcement_body");
-            announcement_body.setText(announcement);
-            System.out.println(announcement);
-
+            announcement_body.setText("<HTML>" + announcement);
+        } else {
+            panelAnnouncement.setVisible(false);
+            announcement_body.setText("");
+            btnAnnouncement.setVisible(false);
         }
+        
     } catch (SQLException e) {
         e.printStackTrace();
     } finally {
@@ -248,9 +315,6 @@ public class landing_page extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-        } else {
-            panelAnnouncement.setVisible(false);
-        }
     }
     
     public void setNullText(){
@@ -300,6 +364,7 @@ public class landing_page extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel announcement_body;
+    private javax.swing.JButton btnAnnouncement;
     private javax.swing.JButton btnLinus1;
     private javax.swing.JButton btnLinus2;
     private javax.swing.JButton buttonRefreshLogLinus;

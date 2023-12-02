@@ -21,27 +21,20 @@ public class halamanAdmin extends javax.swing.JFrame {
     }
     
     private void hideFields() {
-        jLabel10.setVisible(false);
-        inputUsername.setVisible(false);
-        jLabel1.setVisible(false);
-        inputBus.setVisible(false);
-        buttonTambah.setVisible(false);
         buttonHapus.setVisible(false);
-        announcementContainer.setVisible(false);
-        buttonKirimPengumuman.setVisible(false);
     }
     
     private void showFieldsTambahBus() {
         jLabel10.setVisible(true);
         inputUsername.setVisible(true);
         jLabel1.setVisible(true);
-        inputBus.setVisible(true);
+        inputPass.setVisible(true);
         buttonTambah.setVisible(true);
     }
     
     private void showFieldsHapusBus() {
-        jLabel10.setVisible(true);
-        inputUsername.setVisible(true);
+        jLabel1.setVisible(false);
+        inputPass.setVisible(false);
         buttonTambah.setVisible(false);
         buttonHapus.setVisible(true);
     }
@@ -65,9 +58,9 @@ public class halamanAdmin extends javax.swing.JFrame {
         this.countLinus = String.valueOf(count);
     }
 
-    private void showListBusAccount(){
+    private void showListBusAccount() {
     listBus.setVisible(true);
-        
+    
     Connection connection = null;
     Statement statement = null;
     
@@ -88,11 +81,20 @@ public class halamanAdmin extends javax.swing.JFrame {
          
         // Menjalankan query
         ResultSet rs = statement.executeQuery(showListBusQuery);
-
-        while(rs.next()){
+        
+        StringBuilder usernames = new StringBuilder();
+        
+        boolean isLast = false;
+        while (rs.next()) {
             String username = rs.getString("username");
-            listBus.setText(username);
+            isLast = rs.isLast();
+            usernames.append(username);
+            if(!isLast){
+             usernames.append(", \n");
+            }
         }
+
+        listBus.setText(usernames.toString());
     } catch (SQLException e) {
         e.printStackTrace();
     } finally {
@@ -124,7 +126,7 @@ public class halamanAdmin extends javax.swing.JFrame {
         listBus = new javax.swing.JLabel();
         buttonHapusBus = new javax.swing.JButton();
         buttonTambah = new javax.swing.JButton();
-        inputBus = new javax.swing.JTextField();
+        inputPass = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         inputUsername = new javax.swing.JTextField();
         buttonTambahBus = new javax.swing.JButton();
@@ -193,7 +195,7 @@ public class halamanAdmin extends javax.swing.JFrame {
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
 
         listBus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        getContentPane().add(listBus, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 160, 40));
+        getContentPane().add(listBus, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 690, 50));
 
         buttonHapusBus.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         buttonHapusBus.setText("Hapus Bus");
@@ -215,12 +217,12 @@ public class halamanAdmin extends javax.swing.JFrame {
         });
         getContentPane().add(buttonTambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 560, 110, 40));
 
-        inputBus.addActionListener(new java.awt.event.ActionListener() {
+        inputPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputBusActionPerformed(evt);
+                inputPassActionPerformed(evt);
             }
         });
-        getContentPane().add(inputBus, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 490, 300, 50));
+        getContentPane().add(inputPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 490, 300, 50));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel10.setText("Username");
@@ -299,7 +301,7 @@ public class halamanAdmin extends javax.swing.JFrame {
     private void buttonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahActionPerformed
         // TODO add your handling code here:
         String username = inputUsername.getText();
-        String password = inputBus.getText();
+        String password = inputPass.getText();
 
         if (!username.isEmpty() && !password.isEmpty()) {
         // Jika kedua kolom diisi, simpan data ke database
@@ -328,13 +330,12 @@ public class halamanAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_inputUsernameActionPerformed
 
-    private void inputBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputBusActionPerformed
+    private void inputPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputPassActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_inputBusActionPerformed
+    }//GEN-LAST:event_inputPassActionPerformed
 
     private void buttonBuatPengumumanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBuatPengumumanActionPerformed
         // TODO add your handling code here:
-        announcementContainer.setVisible(true);
         announcementContainer.setLineWrap(true);
         announcementContainer.setWrapStyleWord(true);
         buttonKirimPengumuman.setVisible(true);
@@ -359,7 +360,7 @@ public class halamanAdmin extends javax.swing.JFrame {
     private void saveUserBusToDatabase() {
      // Ambil data dari JTextField
     String username = inputUsername.getText();
-    String password = inputBus.getText();
+    String password = inputPass.getText();
 
     // Menjalankan koneksi ke database
     Connection connection = null;
@@ -383,9 +384,6 @@ public class halamanAdmin extends javax.swing.JFrame {
         // Menjalankan query
         statement.executeUpdate(query);
 
-        // Informasi berhasil ditambahkan
-        System.out.println("Data bus berhasil ditambahkan ke database!");
-        
         // Notifikasi bahwa data berhasil ditambahkan
         JOptionPane.showMessageDialog(this, "Data supir berhasil ditambahkan ke dalam database!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
 
@@ -410,7 +408,7 @@ public class halamanAdmin extends javax.swing.JFrame {
     String username = inputUsername.getText();
 
     if(!username.isEmpty()){
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin menghapus username '" + username + "'?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin menghapus data linus '" + username + "'?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
     
         if (dialogResult == JOptionPane.YES_OPTION) {
         // Menjalankan koneksi ke database
@@ -435,9 +433,6 @@ public class halamanAdmin extends javax.swing.JFrame {
             // Menjalankan query
             int rowsAffected = statement.executeUpdate(query);
             
-            // Informasi berhasil ditambahkan
-            System.out.println("Data bus berhasil di hapus di database!");
-
             // Cek apakah data berhasil dihapus
             if (rowsAffected > 0) {
                 // Notifikasi bahwa data berhasil dihapus
@@ -494,16 +489,10 @@ public class halamanAdmin extends javax.swing.JFrame {
                 
         // Menjalankan query
         statement.executeUpdate(query);
-
-        // Informasi berhasil ditambahkan
-        System.out.println("Pengumuman berhasil ditambahkan ke database!");
         
         // Notifikasi bahwa data berhasil ditambahkan
         JOptionPane.showMessageDialog(this, "Pengumuman berhasil dibuat!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
 
-        landing_page lp = new landing_page();
-        boolean showAnnouncemennt = true;
-        lp.announcementController();
     } catch (SQLException e) {
         e.printStackTrace();
     } finally {
@@ -598,7 +587,7 @@ public class halamanAdmin extends javax.swing.JFrame {
     private javax.swing.JButton buttonKirimPengumuman;
     private javax.swing.JButton buttonTambah;
     private javax.swing.JButton buttonTambahBus;
-    private javax.swing.JTextField inputBus;
+    private javax.swing.JTextField inputPass;
     private javax.swing.JTextField inputUsername;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
