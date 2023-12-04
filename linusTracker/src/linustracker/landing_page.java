@@ -210,7 +210,7 @@ public class landing_page extends javax.swing.JFrame {
     private void btnLinus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinus1ActionPerformed
         // TODO add your handling code here:
         logHalteText.setText("");
-        logHalteText.setText("Linus1");
+        logHalteText.setText("<HTML>Maaf, linus ini mungkin telah selesai beroperasi");
 
         String filePath = "D:\\";
         File directory = new File(filePath);
@@ -235,7 +235,7 @@ public class landing_page extends javax.swing.JFrame {
     private void btnLinus2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinus2ActionPerformed
         // TODO add your handling code here:
         logHalteText.setText("");
-        logHalteText.setText("Linus2");
+        logHalteText.setText("<HTML>Maaf, linus ini mungkin telah selesai beroperasi");
 
         String filePath = "D:\\";
         File directory = new File(filePath);

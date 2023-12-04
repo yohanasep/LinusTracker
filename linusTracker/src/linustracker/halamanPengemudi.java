@@ -328,15 +328,15 @@ public class halamanPengemudi extends javax.swing.JFrame {
 
             while ((line = file.readLine()) != null) {
                 if (currentLine > 14 && currentLine <= 20) {
-                    write.append(line).append(System.lineSeparator());
                     isFull = true;
+                    write.append(line).append(System.lineSeparator());
                 }
                 currentLine++;
             }
 
             if (!isFull) {
                 // Reset reader
-                file.close();
+               file.close();
 
                 // Skip some lines
                 for (int i = 0; i < 14; i++) {
@@ -346,26 +346,28 @@ public class halamanPengemudi extends javax.swing.JFrame {
                 while ((line = file.readLine()) != null) {
                     write.append(line).append(System.lineSeparator());
                 }
-
-                file.close();
             }
 
             try (FileWriter writer = new FileWriter(filePath + fileName)) {
                 writer.write(write.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
         } catch (IOException e) {
+            System.out.println("file not closed");
             e.printStackTrace();
         }
-
+ 
         try {
             if (!halte.equals("")) {
                 writeFile.write(halte + "&nbsp|&nbsp " + Vjam + " <br>\n");
                 JOptionPane.showMessageDialog(null, "Halte berhasil ditandai!");
+                writeFile.close();
             } else {
                 JOptionPane.showMessageDialog(null, "Pilih halte terlebih dahulu!");
             }
-            writeFile.close();
+            
         } catch (Exception e) {
             System.out.println("gagal menandai halte");
             e.printStackTrace();
